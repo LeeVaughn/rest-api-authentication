@@ -7,6 +7,7 @@ const { check, validationResult } = require('express-validator');
 const nameValidator = check('name')
   .exists({ checkNull: true, checkFalsy: true })
   .withMessage('Please provide a value for "name"');
+const bcryptjs = require('bcryptjs');
 
 // this array is used to keep track of user records as they are created
 const users = [];
@@ -30,6 +31,9 @@ router.post('/users', nameValidator, (req, res) => {
 
   // get the user from the request body
   const user = req.body;
+
+  // hash the new user's password
+  user.password = bcryptjs.hashSync(user.password);
 
   // add the user to the `users` array
   users.push(user);
