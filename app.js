@@ -2,6 +2,7 @@
 
 const express = require('express');
 const morgan = require('morgan');
+const routes = require('./routes');
 
 // Create the Express app.
 const app = express();
@@ -18,6 +19,9 @@ app.get('/', (req, res) => {
     message: 'Welcome to the REST API Authentication with Express project!',
   });
 });
+
+// add routes
+app.use('/api', routes);
 
 // Send 404 if no other route matched.
 app.use((req, res) => {
